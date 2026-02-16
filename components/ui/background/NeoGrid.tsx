@@ -1,81 +1,109 @@
 export default function NeoGrid() {
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-0 z-0"
-    >
-      {/* Base background */}
-      <div
-        className="absolute inset-0"
-        style={{ backgroundColor: "#f3f7ff" }}
-      />
+    <div aria-hidden="true" style={wrap}>
+      {/* Minor grid (tipis) */}
+      <div style={minorGrid} />
 
-      {/* SVG grid */}
-      <svg
-        className="absolute inset-0 w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <pattern
-            id="fractl-grid"
-            width="48"
-            height="48"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 48 0 L 0 0 0 48"
-              fill="none"
-              stroke="#2EE0D1"
-              strokeWidth="2"
-            />
-          </pattern>
+      {/* Major grid (tebal tapi jarang) */}
+      <div style={majorGrid} />
 
-          <pattern
-            id="fractl-grid-shadow"
-            width="48"
-            height="48"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 48 0 L 0 0 0 48"
-              fill="none"
-              stroke="#0a0a0a"
-              strokeWidth="2"
-            />
-          </pattern>
+      {/* Soft glow */}
+      <div style={glow} />
 
-          <radialGradient id="fractl-glow" cx="50%" cy="50%" r="80%">
-            <stop offset="0%" stopColor="rgba(46,224,209,0.14)" />
-            <stop offset="55%" stopColor="rgba(46,224,209,0.06)" />
-            <stop offset="100%" stopColor="rgba(46,224,209,0)" />
-          </radialGradient>
-        </defs>
-
-        {/* Shadow offset */}
-        <rect
-          x="6"
-          y="6"
-          width="100%"
-          height="100%"
-          fill="url(#fractl-grid-shadow)"
-          opacity="0.22"
-        />
-
-        {/* Main grid */}
-        <rect
-          width="100%"
-          height="100%"
-          fill="url(#fractl-grid)"
-          opacity="0.9"
-        />
-
-        {/* Glow */}
-        <rect
-          width="100%"
-          height="100%"
-          fill="url(#fractl-glow)"
-        />
-      </svg>
+      {/* Very subtle grain */}
+      <div style={grain} />
     </div>
   );
 }
+
+const wrap: React.CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  zIndex: 0,
+  pointerEvents: "none",
+  background: "#EEF4FF", // sedikit lebih calm
+};
+
+// ─────────────────────────────────────────────
+// GRID TUNING
+// ─────────────────────────────────────────────
+
+// Minor grid: rapat, tipis, abu-abu
+const minorSize = 32;
+const minorLine = 1.4;
+
+const minorGrid: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  opacity: 0.18,
+  backgroundImage: `
+    linear-gradient(to right, rgba(10,10,10,0.35) ${minorLine}px, transparent ${minorLine}px),
+    linear-gradient(to bottom, rgba(10,10,10,0.35) ${minorLine}px, transparent ${minorLine}px)
+  `,
+  backgroundSize: `${minorSize}px ${minorSize}px`,
+  backgroundPosition: "0 0",
+};
+
+// Major grid: lebih jarang, cyan, sedikit offset shadow via 2 layer gradient
+const majorSize = 128;
+const majorLine = 2;
+
+const majorGrid: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  opacity: 0.22,
+  backgroundImage: `
+    /* shadow offset */
+    linear-gradient(to right, rgba(10,10,10,0.55) ${majorLine}px, transparent ${majorLine}px),
+    linear-gradient(to bottom, rgba(10,10,10,0.55) ${majorLine}px, transparent ${majorLine}px),
+
+    /* main cyan */
+    linear-gradient(to right, rgba(25,245,227,0.85) ${majorLine}px, transparent ${majorLine}px),
+    linear-gradient(to bottom, rgba(25,245,227,0.85) ${majorLine}px, transparent ${majorLine}px)
+  `,
+  backgroundSize: `
+    ${majorSize}px ${majorSize}px,
+    ${majorSize}px ${majorSize}px,
+    ${majorSize}px ${majorSize}px,
+    ${majorSize}px ${majorSize}px
+  `,
+  backgroundPosition: `
+    8px 8px,
+    8px 8px,
+    0 0,
+    0 0
+  `,
+};
+
+// Glow: lebih soft biar gak “ngeblok” tengah
+const glow: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  backgroundImage: `
+    radial-gradient(circle at 52% 42%,
+      rgba(25,245,227,0.14) 0%,
+      rgba(25,245,227,0.08) 25%,
+      rgba(25,245,227,0.03) 55%,
+      rgba(25,245,227,0) 100%)
+  `,
+};
+
+// Grain tipis: nurunin “sterile”, tapi gak bikin noisy
+const grainSvg = encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180">
+  <filter id="n">
+    <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter>
+  <rect width="180" height="180" filter="url(#n)" opacity="0.22"/>
+</svg>
+`);
+
+const grain: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  opacity: 0.18,
+  mixBlendMode: "multiply",
+  backgroundImage: `url("data:image/svg+xml,${grainSvg}")`,
+  backgroundRepeat: "repeat",
+};
