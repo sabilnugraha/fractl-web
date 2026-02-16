@@ -102,8 +102,8 @@ const grainSvg = encodeURIComponent(`
 const grain: React.CSSProperties = {
   position: "absolute",
   inset: 0,
-  opacity: 0.18,
-  mixBlendMode: "multiply",
+  opacity: 0.12,
+  mixBlendMode: "normal",
   backgroundImage: `url("data:image/svg+xml,${grainSvg}")`,
   backgroundRepeat: "repeat",
 };

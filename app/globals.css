@@ -41,3 +41,30 @@ body {
   background: #fff; /* atau warna lain */
 }
 
+/* Fractl Topbar shared styles */
+.fr-topbar {
+  border-bottom: 2px solid #000;
+  background: #fff;
+  padding: 8px 16px;
+  box-shadow: 4px 4px 0 0 #000;
+}
+
+.fr-brand {
+  border: 2px solid #000;
+  padding: 4px 12px;
+  font-weight: 800;
+}
+
+.fr-btn {
+  border: 2px solid #000;
+  padding: 4px 12px;
+  background: #fff;
+}
+
+.fr-btn--active {
+  background: #caff3a; /* lime-ish */
+}
+
+.fr-btn--shadow {
+  box-shadow: 3px 3px 0 0 #000;
+}
