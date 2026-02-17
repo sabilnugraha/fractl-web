@@ -19,9 +19,9 @@ export default function NeoGrid() {
 const wrap: React.CSSProperties = {
   position: "fixed",
   inset: 0,
-  zIndex: 0,
+  zIndex: -1, // ✅ penting
   pointerEvents: "none",
-  background: "#EEF4FF", // sedikit lebih calm
+  background: "#EEF4FF",
 };
 
 // ─────────────────────────────────────────────
@@ -103,7 +103,7 @@ const grain: React.CSSProperties = {
   position: "absolute",
   inset: 0,
   opacity: 0.12,
-  mixBlendMode: "normal",
+  // mixBlendMode: "multiply", // ❌ jangan
   backgroundImage: `url("data:image/svg+xml,${grainSvg}")`,
   backgroundRepeat: "repeat",
 };

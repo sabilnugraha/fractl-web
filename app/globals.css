@@ -42,29 +42,81 @@ body {
 }
 
 /* Fractl Topbar shared styles */
+/* ===== FRACTL Neo-Brutal Topbar (plain CSS) ===== */
 .fr-topbar {
-  border-bottom: 2px solid #000;
+  position: relative;
+  z-index: 50;
+  isolation: isolate;
+
+  width: 100%;
   background: #fff;
+
+  border-bottom: 2px solid #000000;
   padding: 8px 16px;
+
   box-shadow: 4px 4px 0 0 #000;
 }
 
+.fr-topbar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fr-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 0;
+  flex: 1;
+}
+
+.fr-topbar-center {
+  min-width: 0;
+  flex: 1;
+}
+
+.fr-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Elements */
 .fr-brand {
+  padding: 2px 12px;
   border: 2px solid #000;
-  padding: 4px 12px;
+  background: #fff;
   font-weight: 800;
+  box-shadow: 3px 3px 0 0 #000;
+}
+
+.fr-pill {
+  padding: 2px 8px;
+  border: 2px solid #000;
+  background: #fff;
+  box-shadow: 2px 2px 0 0 #000;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.fr-pill--active {
+  background: #caff3a; /* lime neo */
 }
 
 .fr-btn {
+  padding: 2px 12px;
   border: 2px solid #000;
-  padding: 4px 12px;
   background: #fff;
-}
-
-.fr-btn--active {
-  background: #caff3a; /* lime-ish */
-}
-
-.fr-btn--shadow {
   box-shadow: 3px 3px 0 0 #000;
+  font-size: 14px;
+  line-height: 1.2;
 }
+
+.fr-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
